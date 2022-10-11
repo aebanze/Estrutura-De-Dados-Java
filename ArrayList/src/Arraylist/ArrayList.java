@@ -1,21 +1,26 @@
+package Arraylist;
 
 public class ArrayList {
-    private Object elementos [];
+	private Object elementos [];
     private int totalElem;
-    
+
+    //construtor sem parametro
     public ArrayList (){
         this.elementos = new Object[10];
         this.totalElem = 0;
     }
+    
+    //construtor que recebe um tamanho para inicialização da estrutura ArrayList
     public ArrayList (int tamanho){
         this.elementos = new Object [tamanho];
         this.totalElem = 0;
     }
     
+    //Metodo que verifica se array de objecto dado está vazio ou não
     public boolean eVazia (Object a[]){
         int cont = 0;
         for(int i = 0; i < a.length; i++){
-            if(a[i] == null){
+            if(a[i] != null){
                 cont++;
             }
         }
@@ -24,34 +29,40 @@ public class ArrayList {
         }
         return false;
     }
+    
+    //Metodo que verifica se a posição inserida pelo usuário esta dentro dos parametros ou não
     public boolean posicaoValida (int posicao){
         if (posicao >= 0 && posicao < totalElem){
             return true;
         }
         return false;
     }
+    
+    //Metodo que aumenta a capacidade da nossa estrutura (ArrayList) caso ela esteja cheia
     public void garanteEspaco (){
         if (totalElem == elementos.length){
             Object elemento2[] = new Object [2 * elementos.length];
             for (int i = 0; i <= elementos.length; i++){
-            elemento2 [i] = elementos[i];
+            elemento2[i] = elementos[i];
             elementos = elemento2;
             }
         }
     }
-        
+     
+    //Metodo que adiciona o elemento dado no início da estrutura, ou seja, na posição zero
     public void adicionaInicio (Object elemento){
         if (elemento == null){
             throw new IllegalArgumentException ("Parametro nulo");
         }
         this.garanteEspaco();
         for (int i = totalElem; i > 0; i--){
-            elementos [i] = elementos [i - 1];
+            elementos[i] = elementos[i - 1];
         }
         elementos[0] = elemento;
         totalElem++;
     }
     
+    //Metodo que adiciona o elemento dado à uma posição dada pelo usuário
     public void adicionaPosicao (int posicao, Object elemento){
         if (!posicaoValida(posicao)){
             throw new IndexOutOfBoundsException("posição fora dos parâmetros");
@@ -66,6 +77,8 @@ public class ArrayList {
         elementos[posicao - 1] = elemento;
         totalElem++;
     }
+    
+    //Metodo que adiciona um elemento no final da estrutura, ou seja na ultima posição válida
     public void adicionaFim (Object elemento){
         if (elemento == null){
             throw new IllegalArgumentException ("parametro nulo");
@@ -73,30 +86,43 @@ public class ArrayList {
             elementos[totalElem] = elemento;
             totalElem++;
     }
+    
+    //Esse metodo retorna o elemento na posição desejada
     public Object pega (int posicao){
         if (!posicaoValida(posicao)){
             throw new IndexOutOfBoundsException("posição fora dos parâmetros");
         }
         return elementos[posicao];
     }
+    
+    //Esse metodo remove o primeiro elemento da estrutura (posição [0])
     public void removeInicio () {
-    for(int i = 0; i < totalElem; i++){
-        elementos[i] = elementos[i+1];
+    	if(totalElem == 0) {
+    		throw new NullPointerException("Estrutura Vazia");
+    	}
+	    for(int i = 0; i < totalElem; i++){
+	        elementos[i] = elementos[i+1];
+	    }
+	    totalElem--;
     }
-    totalElem--;
-    }
+    
+    //Esse metodo elimina o elemento na posição desejada
     public void removePosicao (int posicao){
-         if (!posicaoValida(posicao)){
+        if (!posicaoValida(posicao)){
             throw new IndexOutOfBoundsException("posição fora dos parâmetros");
         }
-         for (int i = posicao-1; i < totalElem; i++){
+        for (int i = (posicao-1); i < totalElem; i++){
              elementos [i] = elementos[i+1];
-         }
-         totalElem--;
+        }
+        totalElem--;
     }
+    
+    //Metodo que remove o elemento na ultima posição válida da estrutura
     public void removeFim(){
         totalElem--;
     }
+    
+    // Metodo que retorna true caso um dado elemento esteja contido na estrutura e false caso não
     public boolean contem (Object elemento){
         if(elemento == null){
             throw new IllegalArgumentException ("parametro nulo");
